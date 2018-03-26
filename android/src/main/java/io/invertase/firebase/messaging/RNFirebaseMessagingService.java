@@ -38,7 +38,13 @@ public class RNFirebaseMessagingService extends FirebaseMessagingService {
         // If the app is in the background we send it to the Headless JS Service
         Intent headlessIntent = new Intent(this.getApplicationContext(), RNFirebaseBackgroundMessagingService.class);
         headlessIntent.putExtra("message", message);
-        this.getApplicationContext().startService(headlessIntent);
+        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+          this.getApplicationContext().startForegroundService(headlessIntent);
+        } else {
+          this.getApplicationContext().startService(headlessIntent);
+        }
+        
         HeadlessJsTaskService.acquireWakeLockNow(this.getApplicationContext());
       }
     }
