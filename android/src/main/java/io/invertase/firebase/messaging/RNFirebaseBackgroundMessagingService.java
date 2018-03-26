@@ -1,6 +1,8 @@
 package io.invertase.firebase.messaging;
 
+import android.app.Notification;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.facebook.react.HeadlessJsTaskService;
@@ -29,7 +31,7 @@ public class RNFirebaseBackgroundMessagingService extends HeadlessJsTaskService 
     }
     return START_NOT_STICKY;
   }
-  
+
   @Override
   protected @Nullable HeadlessJsTaskConfig getTaskConfig(Intent intent) {
     Bundle extras = intent.getExtras();

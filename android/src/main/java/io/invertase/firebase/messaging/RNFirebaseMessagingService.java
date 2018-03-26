@@ -1,6 +1,7 @@
 package io.invertase.firebase.messaging;
 
 import android.content.Intent;
+import android.os.Build;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -38,13 +39,13 @@ public class RNFirebaseMessagingService extends FirebaseMessagingService {
         // If the app is in the background we send it to the Headless JS Service
         Intent headlessIntent = new Intent(this.getApplicationContext(), RNFirebaseBackgroundMessagingService.class);
         headlessIntent.putExtra("message", message);
-        
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
           this.getApplicationContext().startForegroundService(headlessIntent);
         } else {
           this.getApplicationContext().startService(headlessIntent);
         }
-        
+
         HeadlessJsTaskService.acquireWakeLockNow(this.getApplicationContext());
       }
     }
